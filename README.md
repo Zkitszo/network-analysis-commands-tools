@@ -17,6 +17,8 @@ Get the IP address of your Pi:
 ```sh
 hostname -I
 ```
+> [!NOTE]
+> Running the above gives the actual IP, where some may mistake the command "hostname -i" to return the same, it does not- depending on settup may return a differrent value- for the most part our applications return the callback IP address- using it will just loop the data back to the Pi.
 
 or
 ```sh
@@ -91,6 +93,46 @@ Other useful prompt codes:
 ## Nzyme Specific
 > Detais and findings as a user setting up Nzyme for the first time directed at those starting with limitted network experiene. You have no choice but to learn.
 
+
+## Setting Up PostgrSQL
+I faced a fare bit of chgallenges with this- Hopefully this lets you glide past with out any yourself-
+
+> [!IMPORTANT]
+> This may be a problematiuc section for less experienced individuals- The documentation lumps the settup into one code bloc- They infact are required to be split up into their oun, individual step, one command at a time, confirming the command's outcome along the way.
+
+> [!CAUTION]
+> Care and attention are required with this step- very important it is done, and correctly. Since everything is lumpewd into one code block, you must only run the command. Eerything else is just how it'll loo  once completted. Ex: postgres=# CREATE USER nzyme WITH ENCRYPTED PASSWORD 'YOUR_PASSWORD_HERE';
+CREATE ROLE the first postgres=# is just refrencing path and will already be onscreen- Similar the second CREATE ROLE at the end- That is the outcome of the command provided once the command has run-  The correct command here is CREATE USER nzyme WITH ENCRYPTED PASSWORD 'youhavechangedthistoyourpassword';- Following that the command loos like postgres=# GRANT ALL PRIVILEGES ON DATABASE nzyme TO nzyme; GRANT but, the only part you are actually running are GRANT ALL PRIVILEGES ON DATABASE nzyme TO nzyme;- Copying thast whole bloc will not work/ doing it any other way will fail.
+
+> [!WARNING]
+> Running the command sudo -u postgres psql returns an error could not change directory to "/home/node000": Permission denied psql (15.14 (Debian 15.14-0+deb12u1)) Type "help" for help. Though, anyone observant wil notice path change to postgres=# which means it wored regardless and you can carry on to the net command. 
+
+> [!IMPORTANT]
+> After this part postgres=# \c nzyme You are now connected to database "nzyme" as user "postgres". nzyme=# GRANT CREATE ON SCHEMA public TO nzyme the actual path will show as nzyme=# where in the documentation it remains as postgres=#- The change to nzyme=# is correct.
+
+The code block for the setup of postgsql should be broken out into seperate commands-
+
+> sudo -u postgres psql
+> CREATE DATABASE nzyme;
+> CREATE USER nzyme WITH ENCRYPTED PASSWORD 'password';
+> GRANT ALL PRIVILEGES ON DATABASE nzyme TO nzyme;
+
+Note path change- differrent from documentation- yet correct- from postgres=# to nzyme=#- no worries, carry on.
+
+> \c nzyme
+
+...
+
+postgres=# CREATE DATABASE nzyme;
+CREATE DATABASE
+postgres=# CREATE USER nzyme WITH ENCRYPTED PASSWORD 'YOUR_PASSWORD_HERE';
+CREATE ROLE
+postgres=# GRANT ALL PRIVILEGES ON DATABASE nzyme TO nzyme;
+GRANT
+postgres=# \c nzyme
+postgres=# GRANT CREATE ON SCHEMA public TO nzyme;
+GRANT
+postgres=# \q
 
 
 ## Nzyme Node & Tap Files
