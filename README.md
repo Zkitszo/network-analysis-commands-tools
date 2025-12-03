@@ -117,22 +117,14 @@ The code block for the setup of postgsql should be broken out into seperate comm
 > CREATE USER nzyme WITH ENCRYPTED PASSWORD 'password';
 > GRANT ALL PRIVILEGES ON DATABASE nzyme TO nzyme;
 
-Note path change- differrent from documentation- yet correct- from postgres=# to nzyme=#- no worries, carry on.
+>[Note]
+> Observe path change- differrent from documentation- yet correct- from postgres=# to nzyme=#- no worries, carry on.
 
 > \c nzyme
 
 ...
 
-postgres=# CREATE DATABASE nzyme;
-CREATE DATABASE
-postgres=# CREATE USER nzyme WITH ENCRYPTED PASSWORD 'YOUR_PASSWORD_HERE';
-CREATE ROLE
-postgres=# GRANT ALL PRIVILEGES ON DATABASE nzyme TO nzyme;
-GRANT
-postgres=# \c nzyme
-postgres=# GRANT CREATE ON SCHEMA public TO nzyme;
-GRANT
-postgres=# \q
+
 
 
 ## Nzyme Node & Tap Files
@@ -150,6 +142,31 @@ postgres=# \q
 ---
 
 ## WiFi Adapter Management (Linux/Pi)
+
+>[Important]
+> Sometimes even branded adapters may not be what is advertised. Especially purchasing off 3rd party sites, or market places. Counterfeits, false addvertising, refurbished product where other componnents may have substituted originasls- possible componnent/ chip shortages at time of manufacture for a brief period of time. You may think you are getting an adapter with chipset X when in reality you got your self an adapter with chipset Z. Running commands like 'lsusb' and instead of going by what the advertiser wants you to think is inside, you can retrieve the ID of the device and cross refrence that against a database such as 'WikiDevi'. Using the ID on WikiDevi will help with identifying chipset manufacturer and model. On Windows open the device manager. That ID will be located in Details pane of the device itself, as property 'Hardware IDs'. See https://www.aircrack-ng.org/doku.php?id=compatibility_drivers for further details.
+
+
+
+
+For USB adapters
+```sh
+lsusb
+```
+
+ Fof internal adapters
+ ```sh
+lspci
+```
+
+
+View capabillities of WiFi adapter(s)
+
+```sh
+iw list | grep monitor
+```
+>[Note]
+> The above command 'iw list | grep monitor' returns any instance of the word monitor whether related to monitor mode or not. Running 'iw list' provides an extensive list of ALL your Wifi adapters capabillities, watch for the section which reads 'Supported interface modes'. Alternativelly you can use 'aircrack-ng'.
 
 **Set default WiFi adapter:**
 
@@ -177,6 +194,66 @@ sudo reboot
 
 After reboot, defaults to selected adapter.  
 If issues arise, repeat `nmcli` checks and modify again as needed.
+
+## Use aircrack-ng
+
+Focussing on security, 'Aircrack-ng' is a complete suite of tools to assess WiFi network status.
+
+[(https://www.aircrack-ng.org]
+((https://www.aircrack-ng.org/)
+
+## Other
+
+Wep hex dictionary already prepared
+[([https://www.aircrack-ng.org/doku.php?id=aircrack-ng
+](https://www.latinsud.com/pub/wepdict/)
+
+https://wepattack.sourceforge.net/
+https://sourceforge.net/projects/wepattack/
+
+[(Ultra-fast dhcp discovery tool for Linux. Used for LAN reconaissance written in C.](https://www.latinsud.com/pub/dhd/)
+'
+https://sourceforge.net/projects/prometheus.mirror/
+Export metrics for Prometheus
+https://github.com/phaag/nfexporter
+
+https://sourceforge.net/projects/zeek.mirror/
+
+https://nfdump.sourceforge.net/   -legacy
+https://github.com/phaag/nfdump
+http://www.ripe.net/ripe/meetings/ripe-50/presentations/ripe50-plenary-tue-nfsen-nfdump.pdf
+nfdump syntax "cheatsheet" for filterring
+https://gist.github.com/phaag/06369bed7f39f97e1de51b1b0f5bc29a
+
+NfSen is a graphical WEB based front end for the nfdump netflow tools.
+https://sourceforge.net/projects/nfsen/  -legacy
+https://github.com/phaag/nfsen
+
+
+
+
+
+https://sourceforge.net/projects/dragonos-focal/
+
+for Pi
+https://sourceforge.net/projects/dragonos-pi64/
+
+https://sourceforge.net/projects/airgeddon.mirror/
+
+iperf
+
+https://sourceforge.net/projects/netstalker.mirror/
+
+Arp spoofer
+https://sourceforge.net/projects/elmocut/
+
+
+
+
+
+
+
+
 
 ---
 
